@@ -1,14 +1,18 @@
 class CardsController < ApplicationController
     def form
+        @text = session[:value]
+        @result = session[:result]
+
+        if @result.nil? && @text
+            @error = '形式が正しくありません'
+        end
     end
 
-    def result
-        @text = params[:value]
-        @value = Card.judge(params[:value])
+    def judge
+        session[:value] = params[:value]
+        session[:result] = Card.judge(params[:value])
 
-        if @value.nil?
-            @error = '形式が正しくありません'
-        end 
+        redirect_to '/'
     end
 
 end
