@@ -29,7 +29,7 @@ class Card < ApplicationRecord
             elsif (st_dup.length == 1)
                 value =  'フラッシュ！'
             
-            elsif ((numbers.max - numbers.min == 4) && (suits.length > 1))
+            elsif ((numbers.max - numbers.min == 4) && (num_dup.length == 5))
                 value = 'ストレート！'
 
             # 数字が3グループ存在する場合

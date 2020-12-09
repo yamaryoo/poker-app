@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
     def form
-        @text = session[:value]
+        @text = session[:text]
         @result = session[:result]
 
         if @result.nil? && @text
@@ -9,8 +9,8 @@ class CardsController < ApplicationController
     end
 
     def judge
-        session[:value] = params[:value]
-        session[:result] = Card.judge(params[:value])
+        session[:text] = params[:text]
+        session[:result] = Card.judge(params[:text])
 
         redirect_to '/'
     end

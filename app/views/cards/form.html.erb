@@ -1,6 +1,6 @@
 <h2>カードの値を入力してね</h2>
 <%= form_with url: '/judge', local: true do |form| %>
-    <%= form.text_field :value, value:@text %>
+    <%= form.text_field :text, value:@text %>
     <%= form.submit '判定する！' %>
 <% end %>
 
