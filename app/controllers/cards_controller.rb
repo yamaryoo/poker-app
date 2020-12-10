@@ -16,3 +16,6 @@ class CardsController < ApplicationController
     end
 
 end
+
+# def is_correct_cards?(cards)
+#     if cards
