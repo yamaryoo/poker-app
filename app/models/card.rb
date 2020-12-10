@@ -1,15 +1,15 @@
 class Card < ApplicationRecord
     def self.judge(value)
-        suit = 'S|C|H|D'
-        number = '1[0-3]|[1-9]'
+        # suit = 'S|C|H|D'
+        # number = '1[0-3]|[1-9]'
 
-        if (value.match(/^(#{suit})(#{number})( (#{suit})(#{number})){4}$/))
+        if (value.match(/^(#{Settings.regex[:suit]})(#{Settings.regex[:number]})( (#{Settings.regex[:suit]})(#{Settings.regex[:number]})){4}$/))
             # numberの並び替え
-            numbers = value.scan(/#{number}/).map{|x| x.to_i}.sort
+            numbers = value.scan(/#{Settings.regex[:number]}/).map{|x| x.to_i}.sort
             num_dup = numbers.group_by(&:itself)
 
             # suitの重複を取得
-            suits = value.scan(/#{suit}/)
+            suits = value.scan(/#{Settings.regex[:suit]}/)
             st_dup = suits.group_by(&:itself)
 
             # 数字が1グループ存在する場合

@@ -17,5 +17,16 @@ class CardsController < ApplicationController
 
 end
 
-# def is_correct_cards?(cards)
-#     if cards
+def validates_cards(cards)
+    card_array = cards.scan(Settings.regex[:card])
+    errors = []
+
+    if cards.match(/^(#{Settings.regex[:suit]})(#{Settings.regex[:number]})( (#{Settings.regex[:suit]})(#{Settings.regex[:number]})){4}$/)
+        errors.push('エラーですhogehoge')
+
+    elsif card_array.group_by(&:itself).length < 5
+        errors.push('エラーですfugafuga')
+    end 
+
+    return errors
+end
