@@ -4,8 +4,12 @@
     <%= form.submit '判定する！' %>
 <% end %>
 
-<% if @error %>
-    <p><%= @error %></p>
+<% if @errors %>
+    <ul>
+        <% @errors.each do |error| %>
+        <li><%= error%></li>
+        <% end %>
+    </ul>
 <% end %>
 
 <% if @result %>

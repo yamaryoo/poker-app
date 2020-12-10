@@ -1,32 +1,56 @@
 class CardsController < ApplicationController
     def form
         @text = session[:text]
-        @result = session[:result]
 
-        if @result.nil? && @text
-            @error = '形式が正しくありません'
+        if session[:result]
+            @result = session[:result]
+
+        elsif session[:errors]
+            @errors = session[:errors]
         end
     end
 
     def judge
+        session[:text] = nil
+        session[:errors] = nil
+        session[:result] = nil
+
+        # validation
+         @errors = validates_cards(params[:text])
+
+        if @errors.any?
+            session[:errors] = @errors
+        else
+            session[:result] = Card.judge(params[:text])
+        end 
+
         session[:text] = params[:text]
-        session[:result] = Card.judge(params[:text])
 
         redirect_to '/'
     end
-
 end
 
 def validates_cards(cards)
-    card_array = cards.scan(Settings.regex[:card])
+    card_array = cards.scan(/\S+/)
     errors = []
 
-    if cards.match(/^(#{Settings.regex[:suit]})(#{Settings.regex[:number]})( (#{Settings.regex[:suit]})(#{Settings.regex[:number]})){4}$/)
-        errors.push('エラーですhogehoge')
+    # 半角スペースで区切られた文字が5つ存在するか？
+    if card_array.length != 5
+        errors.push(I18n.t "errors.incorrect_cards")
+    end
 
-    elsif card_array.group_by(&:itself).length < 5
-        errors.push('エラーですfugafuga')
+    # n番目のカード指定文字が間違っていないか
+    card_array.each do |card|
+        if !(card.match(/^#{Settings.regex[:card]}$/))
+            errors.push(I18n.t "errors.incorrect_card", n: card_array.find_index(card)+1)
+        end
+    end
+
+    # カードが重複していないか
+    if card_array.group_by(&:itself).length < card_array.length
+        errors.push(I18n.t "errors.duplicated_card")
     end 
-
+    
     return errors
+
 end
