@@ -9,7 +9,7 @@ class CardsController < ApplicationController
             @errors = session[:errors]
         end
     end
-
+    
     def judge
         session[:text] = nil
         session[:errors] = nil
@@ -21,13 +21,14 @@ class CardsController < ApplicationController
         if @errors.any?
             session[:errors] = @errors
         else
-            session[:result] = Card.judge(params[:text])
+            session[:result] = judge_cards(params[:text])
         end 
 
         session[:text] = params[:text]
 
         redirect_to '/'
     end
+
 end
 
 def validates_cards(cards)
@@ -54,3 +55,52 @@ def validates_cards(cards)
     return errors
 
 end
+
+def judge_cards(cards)
+    # numberの並び替え
+    numbers = cards.scan(/#{Settings.regex[:number]}/).map{|x| x.to_i}.sort
+    num_dup = numbers.group_by(&:itself)
+
+    # suitの重複を取得
+    suits = cards.scan(/#{Settings.regex[:suit]}/)
+    st_dup = suits.group_by(&:itself)
+
+    # 数字が1グループ存在する場合
+    if ((numbers.max - numbers.min == 4) && (st_dup.length == 1))
+        result = 'ストレートフラッシュ！'
+
+    # 数字が2グループ存在する場合
+    elsif ((num_dup.length == 2))
+        if [1,4].include? num_dup.values[0].length
+            result = 'フォー・オブ・ア・カインド！'
+
+        else
+            result = 'フルハウス！'
+        end
+
+    # スートが全て同じ場合
+    elsif (st_dup.length == 1)
+        result =  'フラッシュ！'
+    
+    elsif ((numbers.max - numbers.min == 4) && (num_dup.length == 5))
+        result = 'ストレート！'
+
+    # 数字が3グループ存在する場合
+    elsif ((num_dup.length == 3))
+        if num_dup.values[0].length == 2 || num_dup.values[1].length == 2
+            result = 'ツーペア！'
+
+        else
+            result = 'スリー・オブ・ア・カインド！'
+        end
+    
+    elsif ((num_dup.length == 4))
+        result = 'ワンペア！'
+    
+    elsif ((num_dup.length == 5))
+        result = 'ハイカード！'
+    end
+
+    return result
+end
+
