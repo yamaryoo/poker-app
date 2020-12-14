@@ -1,0 +1,13 @@
+<% if @errors.any? %>
+    document.getElementById("errors").innerHTML = '' 
+    <% @errors.each do |error| %>
+        p = document.createElement('p')
+        p.className = 'error'
+        p.innerText = '<%= error %>'
+        document.getElementById("errors").appendChild(p)
+    <% end %>
+    document.getElementById("result").innerHTML = ''
+<% else %>
+    document.getElementById("result").innerHTML = '<%= @value %>'
+    document.getElementById("errors").innerHTML = ''
+<% end %>

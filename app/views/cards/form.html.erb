@@ -1,18 +1,8 @@
 <h2>カードの値を入力してね</h2>
-<%= form_with url: '/judge', local: true do |form| %>
+<%= form_with url: '/judge' do |form| %>
     <%= form.text_field :text, value:@text %>
     <%= form.submit '判定する！' %>
 <% end %>
 
-<% if @errors %>
-    <ul>
-        <% @errors.each do |error| %>
-        <li><%= error%></li>
-        <% end %>
-    </ul>
-<% end %>
-
-<% if @result %>
-    <h2>役の名前はこちらです</h2>
-    <p><%= @result %></p>
-<% end %>
+<p id="result"></p>
+<div id="errors"></div>
