@@ -1,31 +1,9 @@
 class CardsController < ApplicationController
     def form
-        # @text = session[:text]
-
-        # if session[:result]
-        #     @result = session[:result]
-
-        # elsif session[:errors]
-        #     @errors = session[:errors]
-        # end
     end
     
     def judge
-        session[:text] = nil
-        session[:errors] = nil
-        session[:result] = nil
-
-        # validation
-        
         @errors = validates_cards(params[:text])
-
-        # if @errors.any?
-        #     session[:errors] = @errors
-        # else
-        #     session[:result] = judge_cards(params[:text])
-        # end 
-
-        session[:text] = params[:text]
         @value = judge_cards(params[:text])
         respond_to do |format|
             format.js
