@@ -2,3 +2,31 @@ regex:
   suit: 'S|C|H|D'
   number: '1[0-3]|[1-9]'
   card: '(S|C|H|D)(1[0-3]|[1-9])'
+hand:
+  straight_flush:
+    strength: 9
+    name: 'ストレートフラッシュ'
+  four_of_a_kind: 
+    strength: 8
+    name: 'フォー・オブ・ア・カインド'
+  full_house:
+    strength: 7
+    name: 'フルハウス'
+  flush:
+    strength: 6
+    name: 'フラッシュ'
+  straight:
+    strength: 5
+    name: 'ストレート'
+  three_of_a_kind:
+    strength: 4
+    name: 'スリー・オブ・ア・カインド'
+  two_pair:
+    strength: 3
+    name: 'ツーペア'
+  one_pair:
+    strength: 2
+    name: 'ワンペア'
+  high_card:
+    strength: 1
+    name: 'ハイカード'

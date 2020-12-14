@@ -8,6 +8,6 @@
     <% end %>
     document.getElementById("result").innerHTML = ''
 <% else %>
-    document.getElementById("result").innerHTML = '<%= @value %>'
+    document.getElementById("result").innerHTML = '<%= @value[:name] %>'
     document.getElementById("errors").innerHTML = ''
 <% end %>

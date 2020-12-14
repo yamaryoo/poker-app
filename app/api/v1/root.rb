@@ -1,6 +1,6 @@
 module V1
     class Root < Grape::API
-        # version :V1
+        version 'v1', using: :path
         prefix 'api/'
         format :json
 
