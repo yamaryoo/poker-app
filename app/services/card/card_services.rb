@@ -71,8 +71,5 @@ module CardServices
 
         return result
     end
-
-    # module_function :validates_cards
-    # module_function :judge_cards
  
 end
