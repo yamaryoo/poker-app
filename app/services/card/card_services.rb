@@ -1,4 +1,4 @@
-module Util
+module CardServices
     def validates_cards(cards)
         card_array = cards.scan(/\S+/)
         errors = []

@@ -1,7 +1,7 @@
-require Rails.root.join('app', 'services', 'card', 'util')
+require Rails.root.join('app', 'services', 'card', 'card_services')
 module V1
     class Cards < Grape::API
-        include Util
+        include CardServices
         resources :cards do
             desc 'テスト'
             get do
@@ -18,7 +18,7 @@ module V1
                 response = {}
                 result = []
                 error = []
-
+                
                 params[:cards].each do |card|
                     if validates_cards(card).any?
                         err_hash = {
