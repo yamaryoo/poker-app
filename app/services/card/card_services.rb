@@ -1,5 +1,5 @@
 module CardServices
-    def validates_cards(cards)
+    def self.validates_cards(cards)
         card_array = cards.scan(/\S+/)
         errors = []
 
@@ -24,7 +24,7 @@ module CardServices
 
     end
 
-    def judge_cards(cards)
+    def self.judge_cards(cards)
         # numberの並び替え
         numbers = cards.scan(/#{Settings.regex[:number]}/).map{|x| x.to_i}.sort
         num_dup = numbers.group_by(&:itself)
@@ -71,4 +71,8 @@ module CardServices
 
         return result
     end
+
+    # module_function :validates_cards
+    # module_function :judge_cards
+ 
 end
