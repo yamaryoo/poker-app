@@ -5,9 +5,7 @@ class CardsController < ApplicationController
     def judge
         @errors = CardServices.validates_cards(params[:text])
         @value = CardServices.judge_cards(params[:text])
-        # respond_to do |format|
-        #     format.js
-        # end
+
         respond_to :js
     end
 

@@ -18,12 +18,13 @@ describe '判定処理', type: :request do
     describe 'POST /judge' do
         params = {
             text: 'S1 S2 S3 S4 S5',
-            format: :json
+            format: :js
         }
+
         it 'javascript動作テスト' do
             post judge_path, params: params
-            # ここでjavascriptが動作して、form.htmlのresultを書き換えたことをテストしたい
-            expect(1+1).to eq 2
+            # ここでjavascriptが動作して、form.htmlのresultを書き換えたことをテストしたいが、ひとまずstatuscodeだけ
+            expect(response).to have_http_status(200)
         end
         
     end
