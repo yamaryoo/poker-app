@@ -2,15 +2,6 @@ require Rails.root.join('app', 'services', 'card', 'card_services')
 module V1
     class Cards < Grape::API
         resources :cards do
-            desc 'テスト'
-            get do
-              hash = {
-                  'np' => 'netprotections',
-                  'ps' => 'パイセンのこと'
-              } 
-
-              return hash
-            end
 
             desc '判定処理'
             post 'judge' do
