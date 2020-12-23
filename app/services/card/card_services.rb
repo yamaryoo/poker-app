@@ -11,7 +11,7 @@ module CardServices
         # n番目のカード指定文字が間違っていないか
         card_array.each do |card|
             if !(card.match(/^#{Settings.regex[:card]}$/))
-                errors.push(I18n.t "errors.incorrect_card", n: card_array.find_index(card)+1)
+                errors.push(I18n.t "errors.incorrect_card", n: card_array.find_index(card)+1, card: card)
             end
         end
 
