@@ -33,7 +33,7 @@ describe 'バリデーション' do
 
         it 'エラーを返す' do
             errors =CardServices.validates_cards(cards)
-            expect(errors[0]).to eq I18n.t "errors.incorrect_card", n: 1
+            expect(errors[0]).to eq I18n.t "errors.incorrect_card", n: 1, card: 'A1'
         end
     end
 
@@ -42,7 +42,7 @@ describe 'バリデーション' do
 
         it 'エラーを返す' do
             errors =CardServices.validates_cards(cards)
-            expect(errors[0]).to eq I18n.t "errors.incorrect_card", n: 1
+            expect(errors[0]).to eq I18n.t "errors.incorrect_card", n: 1, card: 'S20'
         end
     end
 

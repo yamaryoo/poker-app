@@ -30,6 +30,37 @@ describe 'CardJudgeAPI', type: :request do
         end    
     end
 
+    context 'requestのjsonパラメーターが異なる場合(nullが含まれる）' do
+        params = {
+            cards: ["H1 H13 H12 H11 H10",
+                nil,
+                "C13 D12 C11 H8 H7"]
+        }
+
+        it '400エラーを返却する' do
+            post '/api/v1/cards/judge', params: params
+            json = JSON.parse(response.body)
+
+            expect(response.status).to eq(400)
+            expect(json['error']).to eq(I18n.t("errors.invalid_request"))
+        end
+    end
+
+    context 'requestのjsonパラメーターが異なる場合（パラメーター名が違う）' do
+        params = {
+            car: ["H1 H13 H12 H11 H10",
+                "C13 D12 C11 H8 H7"]
+        } 
+
+        it '400エラーを返却する' do
+            post '/api/v1/cards/judge', params: params
+            json = JSON.parse(response.body)
+
+            expect(response.status).to eq(400)
+            expect(json['error']).to eq(I18n.t("errors.invalid_request"))
+        end
+    end
+
     context '不正なデータが含まれる場合' do
         params = {
             cards: ['D3 H4 C5 C2 S4', 'A1 C2 d1 C5']
@@ -46,8 +77,8 @@ describe 'CardJudgeAPI', type: :request do
             expect(json['error'][0]['card']).to eq(params[:cards][1])
             expect(json['error'][0]['msg']).to eq([
                 I18n.t("errors.incorrect_cards"),
-                I18n.t("errors.incorrect_card", n: 1),
-                I18n.t("errors.incorrect_card", n: 3)]
+                I18n.t("errors.incorrect_card", n: 1, card: 'A1'),
+                I18n.t("errors.incorrect_card", n: 3, card: 'd1')]
             )
         end
     end
