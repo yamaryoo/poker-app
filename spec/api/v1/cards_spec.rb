@@ -83,4 +83,5 @@ describe 'CardJudgeAPI', type: :request do
         end
     end
     
+                    
 end

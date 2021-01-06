@@ -4,40 +4,13 @@ module V1
         resources :cards do
             desc '判定処理'
             post 'judge' do
+
                 if !(request.params.has_key?(:cards)) || request.params[:cards].any? { |card| card.class != String}
                     error! I18n.t('errors.invalid_request'), 400
                 end
+
+                response = CardServices.return_json(params[:cards])
                     
-                response = {}
-                result = []
-                error = []
-                strength = []
-                
-                params[:cards].each do |card|
-                    if CardServices.validates_cards(card).any?
-                        err_hash = {
-                            'card' => card,
-                            'msg' => CardServices.validates_cards(card)
-                        }
-                        error.push(err_hash)
-                    else
-                        rslt_hash = {
-                            'card' => card,
-                            'hand' => CardServices.judge_cards(card)[:name]
-                        }
-                        result.push(rslt_hash)
-                        strength.push(CardServices.judge_cards(card)[:strength])
-                    end
-                end
-
-                is_best_flags = strength.map {|strg| strg == strength.max}
-
-                is_best_flags.each_with_index do |flag, index|
-                    result[index][:best] = flag
-                end
-
-                response[:result] = result
-                response[:error] = error
                 return response
             end
         end

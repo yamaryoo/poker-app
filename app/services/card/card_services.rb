@@ -39,9 +39,9 @@ module CardServices
     }
 
     # 正規表現の定義
-    @@reg_suit = 'S|C|H|D'
+    @@reg_suit   = 'S|C|H|D'
     @@reg_number = '1[0-3]|[1-9]'
-    @@reg_card = '(S|C|H|D)(1[0-3]|[1-9])'
+    @@reg_card   = '(S|C|H|D)(1[0-3]|[1-9])'
 
     # バリデーション
     def self.validates_cards(cards)
@@ -134,8 +134,45 @@ module CardServices
 
             return result
         end
-
-        return result
     end
- 
+
+    # best判定
+    def self.is_best?(target_result, judge_results)
+        strength_list = judge_results.map {|result| result[:strength]}
+
+        target_result[:strength] == strength_list.max
+
+    end
+
+    # jsonの返却
+    def self.return_json(cards)
+        response = {
+            result: [],
+            error: []
+        }
+
+        valid_cards = cards.select {|card| validates_cards(card).empty?} 
+        valid_results = valid_cards.map{|card| judge_cards(card)}
+
+        cards.each do |card|
+            if validates_cards(card).any?
+                error = {
+                    'card' => card,
+                    'msg' => validates_cards(card)
+                }
+                response[:error].push(error)
+            else
+                judge_result = judge_cards(card)
+                result = {
+                    'card' => card,
+                    'hand' => judge_cards(card)[:name],
+                    'best' => is_best?(judge_result, valid_results)
+                }
+                response[:result].push(result)
+            end
+        end
+
+        return response
+    end
+
 end
