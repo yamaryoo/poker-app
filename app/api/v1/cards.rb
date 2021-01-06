@@ -4,7 +4,7 @@ module V1
         resources :cards do
             desc '判定処理'
             post 'judge' do
-                if !(request.params.has_key?(:cards)) || request.params[:cards].any? { |card| card == nil}
+                if !(request.params.has_key?(:cards)) || request.params[:cards].any? { |card| card.class != String}
                     error! I18n.t('errors.invalid_request'), 400
                 end
                     

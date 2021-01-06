@@ -12,20 +12,20 @@ describe 'CardJudgeAPI', type: :request do
     
             expect(response.status).to eq(201)
 
-            expect(json['result'][0]['card']).to eq(params[:cards][0])
-            expect(json['result'][0]['hand']).to eq(Settings.hand[:two_pair].name)
+            expect(json['result'][0]['card']).to eq('S2 D4 H3 C2 S3')
+            expect(json['result'][0]['hand']).to eq('ツーペア')
             expect(json['result'][0]['best']).to eq(false)
 
-            expect(json['result'][1]['card']).to eq(params[:cards][1])
-            expect(json['result'][1]['hand']).to eq(Settings.hand[:one_pair].name)
+            expect(json['result'][1]['card']).to eq('D3 H2 C2 S4 S5')
+            expect(json['result'][1]['hand']).to eq('ワンペア')
             expect(json['result'][1]['best']).to eq(false)
 
-            expect(json['result'][2]['card']).to eq(params[:cards][2])
-            expect(json['result'][2]['hand']).to eq(Settings.hand[:four_of_a_kind].name)
+            expect(json['result'][2]['card']).to eq('H5 S5 D5 C5 C2')
+            expect(json['result'][2]['hand']).to eq('フォー・オブ・ア・カインド')
             expect(json['result'][2]['best']).to eq(true)
 
-            expect(json['result'][3]['card']).to eq(params[:cards][3])
-            expect(json['result'][3]['hand']).to eq(Settings.hand[:four_of_a_kind].name)
+            expect(json['result'][3]['card']).to eq('S2 C2 H2 D2 S3')
+            expect(json['result'][3]['hand']).to eq('フォー・オブ・ア・カインド')
             expect(json['result'][3]['best']).to eq(true)
         end    
     end
@@ -71,7 +71,7 @@ describe 'CardJudgeAPI', type: :request do
             json = JSON.parse(response.body)
 
             expect(json['result'][0]['card']).to eq(params[:cards][0])
-            expect(json['result'][0]['hand']).to eq(Settings.hand[:one_pair].name)
+            expect(json['result'][0]['hand']).to eq('ワンペア')
             expect(json['result'][0]['best']).to eq(true)
 
             expect(json['error'][0]['card']).to eq(params[:cards][1])

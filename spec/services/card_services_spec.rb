@@ -62,7 +62,7 @@ describe "役の判定" do
 
         it 'ストレートフラッシュを返す' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:straight_flush]
+            expect(result[:name]).to eq 'ストレートフラッシュ'
         end    
     end
 
@@ -71,7 +71,7 @@ describe "役の判定" do
 
         it 'フォー・オブ・ア・カインド' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:four_of_a_kind]
+            expect(result[:name]).to eq 'フォー・オブ・ア・カインド'
         end
     end
 
@@ -80,7 +80,7 @@ describe "役の判定" do
 
         it 'フルハウス' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:full_house]
+            expect(result[:name]).to eq 'フルハウス'
         end
     end
 
@@ -89,7 +89,7 @@ describe "役の判定" do
 
         it 'フラッシュ' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:flush]
+            expect(result[:name]).to eq 'フラッシュ'
         end
     end
 
@@ -98,7 +98,7 @@ describe "役の判定" do
 
         it 'ストレート' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:straight]
+            expect(result[:name]).to eq 'ストレート'
         end
     end
 
@@ -107,7 +107,7 @@ describe "役の判定" do
 
         it 'スリー・オブ・ア・カインド' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:three_of_a_kind]
+            expect(result[:name]).to eq 'スリー・オブ・ア・カインド'
         end
     end
 
@@ -116,7 +116,7 @@ describe "役の判定" do
 
         it 'ツーペア' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:two_pair]
+            expect(result[:name]).to eq 'ツーペア'
         end
     end
 
@@ -125,7 +125,7 @@ describe "役の判定" do
 
         it 'ワンペア' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:one_pair]
+            expect(result[:name]).to eq 'ワンペア'
         end
     end
 
@@ -134,7 +134,7 @@ describe "役の判定" do
 
         it 'ハイカード' do
             result = CardServices.judge_cards(cards)
-            expect(result).to eq Settings.hand[:high_card]
+            expect(result[:name]).to eq 'ハイカード'
         end
     end
 

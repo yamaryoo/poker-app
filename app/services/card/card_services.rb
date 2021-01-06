@@ -1,4 +1,51 @@
 module CardServices
+    @@straight_flush = {
+        name: 'ストレートフラッシュ',
+        strength: 9
+    }
+
+    @@four_of_a_kind = {
+        name: 'フォー・オブ・ア・カインド',
+        strength: 8
+    }
+    
+    @@full_house = {
+        name: 'フルハウス',
+        strength: 7
+    }
+
+    @@flush = {
+        name: 'フラッシュ',
+        strength: 6
+    }
+
+    @@straight = {
+        name: 'ストレート',
+        strength: 5
+    }
+
+    @@three_of_a_kind = {
+        name: 'スリー・オブ・ア・カインド',
+        strength: 4
+    }
+
+    @@two_pair = {
+        name: 'ツーペア',
+        strength: 3
+    }
+
+    @@one_pair = {
+        name: 'ワンペア',
+        strength: 2
+    }
+
+    @@high_card = {
+        name: 'ハイカード',
+        strength: 1
+    }
+
+    
+
     def self.validates_cards(cards)
         card_array = cards.scan(/\S+/)
         errors = []
@@ -35,38 +82,59 @@ module CardServices
 
         # 数字が1グループ存在する場合
         if ((numbers.max - numbers.min == 4) && (st_dup.length == 1))
-            result = Settings.hand[:straight_flush]
+            # result = Settings.hand[:straight_flush]
+            result = @@straight_flush
+
+            return result
+        end
 
         # 数字が2グループ存在する場合
-        elsif ((num_dup.length == 2))
+        if ((num_dup.length == 2))
             if [1,4].include? num_dup.values[0].length
-                result = Settings.hand[:four_of_a_kind]
+                result = @@four_of_a_kind
 
             else
-                result = Settings.hand[:full_house]
+                result = @@full_house
             end
+
+            return result
+        end
 
         # スートが全て同じ場合
-        elsif (st_dup.length == 1)
-            result =  Settings.hand[:flush]
+        if (st_dup.length == 1)
+            result =  @@flush
+            
+            return result
+        end
         
-        elsif ((numbers.max - numbers.min == 4) && (num_dup.length == 5))
-            result = Settings.hand[:straight]
+        if ((numbers.max - numbers.min == 4) && (num_dup.length == 5))
+            result = @@straight
+
+            return result
+        end
 
         # 数字が3グループ存在する場合
-        elsif ((num_dup.length == 3))
+        if ((num_dup.length == 3))
             if num_dup.values[0].length == 2 || num_dup.values[1].length == 2
-                result = Settings.hand[:two_pair]
+                result = @@two_pair
 
             else
-                result = Settings.hand[:three_of_a_kind]
+                result = @@three_of_a_kind
             end
         
-        elsif ((num_dup.length == 4))
-            result = Settings.hand[:one_pair]
+            return result
+        end
+
+        if ((num_dup.length == 4))
+            result = @@one_pair
         
-        elsif ((num_dup.length == 5))
-            result = Settings.hand[:high_card]
+            return result
+        end
+
+        if ((num_dup.length == 5))
+            result = @@high_card
+
+            return result
         end
 
         return result
