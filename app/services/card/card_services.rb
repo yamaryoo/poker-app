@@ -54,9 +54,9 @@ module CardServices
         end
 
         # n番目のカード指定文字が間違っていないか
-        card_array.each do |card|
+        card_array.each_with_index do |card, i|
             if !(card.match(/^#{@@reg_card}$/))
-                errors.push(I18n.t "errors.incorrect_card", n: card_array.find_index(card)+1, card: card)
+                errors.push(I18n.t "errors.incorrect_card", n: i+1, card: card)
             end
         end
 
