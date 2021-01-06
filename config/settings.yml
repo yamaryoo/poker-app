@@ -1,4 +1,0 @@
-regex:
-  suit: 'S|C|H|D'
-  number: '1[0-3]|[1-9]'
-  card: '(S|C|H|D)(1[0-3]|[1-9])'

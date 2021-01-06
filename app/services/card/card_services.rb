@@ -1,51 +1,49 @@
 module CardServices
+
+    # 役の定義
     @@straight_flush = {
         name: 'ストレートフラッシュ',
         strength: 9
     }
-
     @@four_of_a_kind = {
         name: 'フォー・オブ・ア・カインド',
         strength: 8
     }
-    
     @@full_house = {
         name: 'フルハウス',
         strength: 7
     }
-
     @@flush = {
         name: 'フラッシュ',
         strength: 6
     }
-
     @@straight = {
         name: 'ストレート',
         strength: 5
     }
-
     @@three_of_a_kind = {
         name: 'スリー・オブ・ア・カインド',
         strength: 4
     }
-
     @@two_pair = {
         name: 'ツーペア',
         strength: 3
     }
-
     @@one_pair = {
         name: 'ワンペア',
         strength: 2
     }
-
     @@high_card = {
         name: 'ハイカード',
         strength: 1
     }
 
-    
+    # 正規表現の定義
+    @@reg_suit = 'S|C|H|D'
+    @@reg_number = '1[0-3]|[1-9]'
+    @@reg_card = '(S|C|H|D)(1[0-3]|[1-9])'
 
+    # バリデーション
     def self.validates_cards(cards)
         card_array = cards.scan(/\S+/)
         errors = []
@@ -57,7 +55,7 @@ module CardServices
 
         # n番目のカード指定文字が間違っていないか
         card_array.each do |card|
-            if !(card.match(/^#{Settings.regex[:card]}$/))
+            if !(card.match(/^#{@@reg_card}$/))
                 errors.push(I18n.t "errors.incorrect_card", n: card_array.find_index(card)+1, card: card)
             end
         end
@@ -71,18 +69,18 @@ module CardServices
 
     end
 
+    # 役の判定
     def self.judge_cards(cards)
         # numberの並び替え
-        numbers = cards.scan(/#{Settings.regex[:number]}/).map{|x| x.to_i}.sort
+        numbers = cards.scan(/#{@@reg_number}/).map{|x| x.to_i}.sort
         num_dup = numbers.group_by(&:itself)
 
         # suitの重複を取得
-        suits = cards.scan(/#{Settings.regex[:suit]}/)
+        suits = cards.scan(/#{@@reg_suit}/)
         st_dup = suits.group_by(&:itself)
 
         # 数字が1グループ存在する場合
         if ((numbers.max - numbers.min == 4) && (st_dup.length == 1))
-            # result = Settings.hand[:straight_flush]
             result = @@straight_flush
 
             return result
