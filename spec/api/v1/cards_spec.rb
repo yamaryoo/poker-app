@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'CardJudgeAPI', type: :request do
-    context '正しいデータを渡した場合' do
+    context '正しいデータを渡した場合(同じ役が2つ存在）' do
         params = {
             cards: ['S2 D4 H3 C2 S3', 'D3 H2 C2 S4 S5', 'H5 S5 D5 C5 C2', 'S2 C2 H2 D2 S3']
         }
@@ -82,6 +82,5 @@ describe 'CardJudgeAPI', type: :request do
             )
         end
     end
-    
                     
 end

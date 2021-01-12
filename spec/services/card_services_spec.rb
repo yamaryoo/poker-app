@@ -139,3 +139,14 @@ describe "役の判定" do
     end
 
 end
+
+describe 'エッジケース' do
+  context 'カードが1枚だけの場合' do
+    cards = 'S1'
+
+    it 'エラーを返す' do
+        errors =CardServices.validates_cards(cards)
+        expect(errors[0]).to eq I18n.t "errors.incorrect_cards"
+    end
+  end
+end
